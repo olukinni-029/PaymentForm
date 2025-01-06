@@ -178,7 +178,7 @@
 
       <div class="form-group">
         <label for="expiry">Expiry</label>
-        <input type="text" id="expiry" placeholder="MM/YY" required pattern="(0[1-9]|1[0-2])\/([0-9]{2})" maxlength="5">
+        <input type="text" id="expiry" placeholder="MM/YY" required pattern="(0[1-9]|1[0-2])\/([0-9]{2})" maxlength="">
       </div>
 
       <div class="form-group">
@@ -192,11 +192,44 @@
 </div>
 
 <script>
+// Prevent non-numeric input where needed
+function preventNonNumericInput() {
+  ['zip', 'cardNumber', 'cvv', 'expiry'].forEach((id) => {
+    document.getElementById(id).addEventListener('keypress', function (e) {
+      if (!/[0-9]/.test(e.key) && e.key !== '/') {
+        e.preventDefault();
+      }
+    });
+  });
+}
+
+// Format expiry date (MM/YY)
+function formatExpiryInput() {
+  const expiryInput = document.getElementById('expiry');
+  expiryInput.addEventListener('input', (e) => {
+    let value = e.target.value;
+
+    // Remove invalid characters
+    value = value.replace(/[^0-9\/]/g, '');
+
+    // Automatically add a slash after the first two digits
+    if (value.length > 2 && !value.includes('/')) {
+      value = value.slice(0, 2) + '/' + value.slice(2);
+    }
+
+    // Limit the input to 5 characters
+    value = value.slice(0, 5);
+
+    e.target.value = value;
+  });
+}
+
+// Validate form fields
 function validateForm(event) {
   event.preventDefault();
 
   // Reset errors
-  document.querySelectorAll('.error').forEach(error => error.style.display = 'none');
+  document.querySelectorAll('.error').forEach((error) => (error.style.display = 'none'));
 
   let isValid = true;
 
@@ -216,15 +249,29 @@ function validateForm(event) {
 
   // Validate ZIP
   const zip = document.getElementById('zip');
-if (!zip.value.match(/^[0-9]{5,9}$/)) {
-  document.getElementById('zipError').style.display = 'block';
-  isValid = false;
-}
+  if (!zip.value.match(/^[0-9]{5,9}$/)) {
+    document.getElementById('zipError').style.display = 'block';
+    isValid = false;
+  }
 
   // Validate card number
   const cardNumber = document.getElementById('cardNumber');
   if (!cardNumber.value.match(/^[0-9]{12,19}$/)) {
     document.getElementById('cardError').style.display = 'block';
+    isValid = false;
+  }
+
+  // Validate expiry
+  const expiry = document.getElementById('expiry');
+  if (!expiry.value.match(/^(0[1-9]|1[0-2])\/([0-9]{2})$/)) {
+    document.getElementById('expiryError').style.display = 'block';
+    isValid = false;
+  }
+
+  // Validate CVV
+  const cvv = document.getElementById('cvv');
+  if (!cvv.value.match(/^[0-9]{3,4}$/)) {
+    document.getElementById('cvvError').style.display = 'block';
     isValid = false;
   }
 
@@ -239,62 +286,46 @@ if (!zip.value.match(/^[0-9]{5,9}$/)) {
       zip: zip.value,
       cardNumber: cardNumber.value,
       cardName: document.getElementById('cardName').value,
-      expiry: document.getElementById('expiry').value,
-      cvv: document.getElementById('cvv').value
+      expiry: expiry.value,
+      cvv: cvv.value,
     };
-    
+
     fetch('https://paymentform-backend.onrender.com/submit-payment', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(formData),
-})
-  .then(response => {
-    if (!response.ok) {
-      return response.json().then(err => {
-        throw err; // Pass the entire error object to the catch block
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((err) => {
+            throw err;
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Response:', data);
+        alert(data.message);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.error('Error:', err);
+
+        if (err.message && err.errors) {
+          const detailedError = `${err.message}:\n${err.errors.join('\n')}`;
+          alert(detailedError);
+        } else {
+          alert(`Error: ${err.message || 'Unknown error'}`);
+        }
       });
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Response:', data);
-    alert(data.message);
-    window.location.reload();
-  })
-  .catch(err => {
-    console.error('Error:', err);
-
-    // Check for specific error structure
-    if (err.message && err.errors) {
-      // Create a detailed error message
-      const detailedError = `${err.message}:\n${err.errors.join('\n')}`;
-      alert(detailedError); // Display all errors in an alert or elsewhere in the UI
-
-      // Alternatively, display errors in the form
-      const errorDiv = document.createElement('div');
-      errorDiv.className = 'error';
-      errorDiv.innerHTML = `<strong>${err.message}</strong><ul>${err.errors
-        .map(e => `<li>${e}</li>`)
-        .join('')}</ul>`;
-      document.getElementById('paymentForm').prepend(errorDiv);
-    } else {
-      // Handle unknown error structures
-      alert(`Error: ${err.message || 'Unknown error'}`);
-    }
-  });
   }
-
   return false;
 }
 
-// Prevent non-numeric input where needed
-['zip', 'cardNumber', 'cvv'].forEach(id => {
-  document.getElementById(id).addEventListener('keypress', function(e) {
-    if (!/[0-9]/.test(e.key)) {
-      e.preventDefault();
-    }
-  });
-});
+// Initialize
+preventNonNumericInput();
+formatExpiryInput();
+
 </script>
 
 </body>
