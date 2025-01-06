@@ -119,7 +119,7 @@ button:hover {
 
     <div class="form-group">
       <label for="zip">ZIP Code</label>
-      <input type="text" id="zip" required pattern="[0-9]{5}">
+      <input type="text" id="zip" required pattern="[0-9]{6}">
       <div class="error" id="zipError">Please enter a valid 5-digit ZIP code</div>
     </div>
 
@@ -176,7 +176,7 @@ function validateForm(event) {
 
   // Validate ZIP
   const zip = document.getElementById('zip');
-  if (!zip.value.match(/^[0-9]{5}$/)) {
+  if (!zip.value.match(/^[0-9]{6}$/)) {
     document.getElementById('zipError').style.display = 'block';
     isValid = false;
   }

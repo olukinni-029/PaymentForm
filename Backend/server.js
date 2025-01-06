@@ -36,7 +36,7 @@ const paymentSchema = new mongoose.Schema({
     zip: {
       type: String,
       required: [true, 'ZIP code is required'],
-      match: [/^\d{5}$/, 'ZIP code must be a 5-digit number'],
+      match: [/^\d{6}$/, 'ZIP code must be a 6-digit number'],
     },
     cardNumber: {
       type: String,
