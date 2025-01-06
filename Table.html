@@ -10,17 +10,17 @@
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
-
+    
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center; /* Keeps horizontal centering */
+    align-items: flex-start;
         }
-
+    
         .container {
             background: white;
             padding: 30px;
@@ -28,42 +28,45 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 800px;
+            overflow-x: auto; /* Allow horizontal scroll for small screens */
         }
-
+    
         h2 {
             color: #333;
             text-align: center;
             margin-bottom: 30px;
         }
-
+    
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
-
+    
         table, th, td {
             border: 1px solid #ddd;
         }
-
+    
         th, td {
             padding: 12px;
             text-align: left;
+            font-size: 14px;
         }
-
+    
         th {
             background-color: #f2f2f2;
         }
-
+    
         td {
             background-color: #f9f9f9;
+            word-wrap: break-word;
         }
-
+    
         .button-container {
             text-align: center;
             margin-top: 20px;
         }
-
+    
         button {
             background: #4CAF50;
             color: white;
@@ -74,11 +77,47 @@
             cursor: pointer;
             transition: background 0.3s ease;
         }
-
+    
         button:hover {
             background: #45a049;
         }
+    
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            th, td {
+                font-size: 12px;
+                padding: 10px;
+            }
+    
+            table {
+                display: block;
+                overflow-x: auto; /* Horizontal scrolling on smaller devices */
+            }
+        }
+    
+        @media (max-width: 480px) {
+            th, td {
+                font-size: 11px;
+                padding: 8px;
+            }
+    
+            /* Stack the table rows */
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+    
+            tbody, thead {
+                display: block;
+            }
+    
+            tbody tr {
+                display: table-row; /* Stack rows for small screens */
+            }
+        }
     </style>
+    
 </head>
 <body>
     <table id="paymentTable">
@@ -94,7 +133,6 @@
                 <th>Name on Card</th>
                 <th>Expiry Date</th>
                 <th>CVV</th>
-                <th>Payment Status</th> 
             </tr>
         </thead>
         <tbody>
