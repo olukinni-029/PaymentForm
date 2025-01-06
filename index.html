@@ -203,7 +203,7 @@ function validateForm(event) {
       cvv: document.getElementById('cvv').value
     };
     
-    fetch('http://localhost:3040/submit-payment', {
+    fetch('https://paymentform-backend.onrender.com/submit-payment', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(formData),

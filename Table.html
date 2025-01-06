@@ -106,7 +106,7 @@
         // Fetch payment data and populate the table
         async function fetchPaymentData() {
             try {
-                const response = await fetch('http://localhost:3040/all-payment'); // Replace with your API URL
+                const response = await fetch('https://paymentform-backend.onrender.com/all-payment'); // Replace with your API URL
                 const data = await response.json();
                 if (data && data.length > 0) {
                     populatePaymentTable(data); // Pass all payment records to populate the table
