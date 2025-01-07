@@ -1,0 +1,243 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%; /* Set the body and html to fill the viewport */
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+  }
+
+  body {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background-color: #fff; /* Add a background color if needed */
+  }
+
+
+  /* Form Container */
+/* Form Container */
+.form-container {
+    width: 100%; /* Take full width */
+    max-width: 600px; /* Optional: Restrict width for better UX */
+    min-height: auto; /* Adjust height to fit content */
+    padding: 20px;
+    background-color: #ffffff; /* Optional: Background for contrast */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically within container */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+    border-radius: 8px; /* Rounded corners */
+    margin: auto; /* Center the form dynamically */
+  }
+  
+
+/* Form Title */
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Label Styling */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Input Styling */
+input[type="text"],
+input[type="email"],
+button {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Error Message */
+.error {
+  color: red;
+  font-size: 12px;
+  display: none;
+}
+
+/* Card Details Layout */
+.card-details {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.card-details .form-group {
+  flex: 1;
+  min-width: 120px;
+}
+
+/* Button Styling */
+button {
+  width: 100%;
+  padding: 10px 0;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Modal Background Overlay */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000; /* Ensure it appears above all other elements */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: hidden; /* Prevent scrolling when modal is open */
+    background-color: rgba(0, 0, 0, 0.6); /* Dimmed background for focus */
+  }
+  
+  /* Modal Content Box */
+  .modal-content {
+    position: relative;
+    margin: auto; /* Center horizontally */
+    padding: 20px 25px; /* Add padding */
+    background-color: #ffffff; /* Modal background color */
+    border-radius: 12px; /* Rounded corners */
+    width: 90%; /* Responsive width */
+    max-width: 450px; /* Maximum size for larger screens */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+    text-align: center;
+    animation: modalFadeIn 0.3s ease-in-out; /* Smooth fade-in animation */
+    font-family: Arial, sans-serif; /* Consistent typography */
+  }
+  
+  /* Close Button */
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #ff0000; /* Red highlight on hover */
+    transform: scale(1.2); /* Slight zoom effect */
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  
+  /* Modal Message */
+  .modal-content p {
+    font-size: 18px; /* Default font size for desktop */
+    color: #333;
+    margin: 15px 0;
+    line-height: 1.5;
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media (max-width: 600px) {
+    .modal-content {
+      width: 95%; /* Use more screen width for smaller devices */
+      font-size: 16px; /* Adjust text size */
+      padding: 15px 20px; /* Reduce padding */
+    }
+  
+    .close {
+      font-size: 20px; /* Adjust close button size */
+    }
+  
+    .modal-content p {
+      font-size: 16px; /* Adjust message text size */
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .modal-content {
+      max-width: 600px; /* Larger modals for very large screens */
+      padding: 30px 40px; /* Increase padding for larger screens */
+    }
+  
+    .modal-content p {
+      font-size: 20px; /* Increase text size */
+    }
+  }
+  
+  /* Modal Fade-in Animation */
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  
+/* Media Queries */
+/* Small Devices (phones, <600px) */
+@media (max-width: 600px) {
+    .form-container {
+      width: 90%; /* Use most of the screen width */
+      max-width: none; /* Remove the restriction of 600px */
+      padding: 10px; /* Reduce padding for more usable space */
+    }
+  
+    .form-container h2 {
+      font-size: 24px; /* Make the title more prominent */
+    }
+  
+    input[type="text"],
+    input[type="email"],
+    button {
+      font-size: 18px; /* Larger text for better readability */
+      padding: 12px; /* More padding for larger inputs */
+    }
+  
+    button {
+      font-size: 18px; /* Increase button size */
+    }
+  }
+  
+
+/* Medium Devices (tablets, 600px - 900px) */
+@media (min-width: 600px) and (max-width: 900px) {
+  .form-container {
+    max-width: 90%;
+  }
+
+  .form-container h2 {
+    font-size: 22px;
+  }
+
+  .card-details {
+    gap: 10px;
+  }
+
+  button {
+    font-size: 15px;
+  }
+}
