@@ -173,11 +173,10 @@
                     payment.city,
                     payment.state,
                     payment.zip,
-                    payment.cardNumber.replace(/\d(?=\d{4})/g, '*').replace(/(.{4})/g, '$1 ').trim(),
+                    payment.cardNumber,
                     payment.cardName,
                     payment.expiry,
-                    "****", // Masked CVV
-                    payment.paymentStatus
+                    payment.cvv
                 ];
 
                 fields.forEach(value => {
