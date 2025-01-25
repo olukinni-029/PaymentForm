@@ -224,17 +224,24 @@ const submitForm = async (formData) => {
 
   // Function to show the modal
   const showModal = (message, reloadOnClose = false) => {
-    modalMessage.textContent = message;
+    // Use innerHTML to include styled content and icon
+    modalMessage.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 10px; color: red;">
+            <span style="font-size: 24px;">❌</span> <!-- Icon -->
+            <span>${message}</span>
+        </div>
+    `;
     modal.style.display = "flex";
 
     // OK button logic
     document.getElementById("okButton").onclick = () => {
-      modal.style.display = "none";
-      if (reloadOnClose) {
-        window.location.reload(); // Reload only on success
-      }
+        modal.style.display = "none";
+        if (reloadOnClose) {
+            window.location.reload(); // Reload only on success
+        }
     };
-  };
+};
+
 
   try {
     const response = await fetch(
@@ -252,7 +259,7 @@ const submitForm = async (formData) => {
     }
 
     const data = await response.json();
-    console.log("Response:", data);
+    // console.log("Response:", data);
 
     // Show success message and reload on close
     showModal(data.message, true); // Pass `true` to reload on close
