@@ -226,11 +226,12 @@ const submitForm = async (formData) => {
   const showModal = (message, reloadOnClose = false) => {
     // Use innerHTML to include styled content and icon
     modalMessage.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 10px; color: red;">
-            <span style="font-size: 24px;">❌</span> <!-- Icon -->
-            <span>${message}</span>
-        </div>
-    `;
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; color: red;">
+        <span style="font-size: 24px;">❌</span> <!-- Icon -->
+        <span>${message}</span>
+    </div>
+`;
+
     modal.style.display = "flex";
 
     // OK button logic
@@ -269,7 +270,7 @@ const submitForm = async (formData) => {
     const detailedError =
       err.message && err.errors
         ? `${err.message}:\n${err.errors.join("\n")}`
-        : `Error: ${err.message || "Unknown error"}`;
+        : `${err.message || "Unknown error"}`;
 
     // Show error message without reload
     showModal(detailedError, false); // Pass `false` to avoid reload
